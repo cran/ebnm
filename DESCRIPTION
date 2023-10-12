@@ -1,32 +1,36 @@
 Package: ebnm
 Encoding: UTF-8
 Type: Package
-Version: 1.0-9
-Date: 2022-03-02
+Version: 1.1-2
+Date: 2023-10-12
 Title: Solve the Empirical Bayes Normal Means Problem
-Authors@R: c(person("Willwerscheid", "Jason", role = "aut"),
-             person("Stephens", "Matthew", role = "aut"),
-             person("Carbonetto", "Peter", role = c("aut", "cre"),
+Authors@R: c(person("Jason", "Willwerscheid", role = "aut"),
+             person("Matthew", "Stephens", role = "aut"),
+             person("Peter", "Carbonetto", role = c("aut", "cre"),
                     email = "peter.carbonetto@gmail.com"),
-             person("Goldstein", "Andrew", role = "ctb"))
+             person("Andrew", "Goldstein", role = "ctb"),
+             person("Yusha", "Liu", role = "ctb"))
 URL: https://github.com/stephenslab/ebnm
 BugReports: https://github.com/stephenslab/ebnm/issues
 Description: Provides simple, fast, and stable functions to fit the normal
     means model using empirical Bayes. For available models and details, see 
-    function ebnm(). A comprehensive introduction to the package is provided
+    function ebnm(). A detailed introduction to the package is provided
     by Willwerscheid and Stephens (2021) <arXiv:2110.00152>.
 License: GPL (>= 3)
 NeedsCompilation: no
 Depends: R (>= 3.3.0)
-Imports: stats, methods, ashr, mixsqp, truncnorm, trust, horseshoe,
-        deconvolveR, magrittr, rlang, dplyr, ggplot2
-Suggests: testthat, numDeriv, REBayes
-RoxygenNote: 7.1.2
-Packaged: 2022-03-03 03:49:45 UTC; pcarbo
-Author: Willwerscheid Jason [aut],
-  Stephens Matthew [aut],
-  Carbonetto Peter [aut, cre],
-  Goldstein Andrew [ctb]
-Maintainer: Carbonetto Peter <peter.carbonetto@gmail.com>
+Imports: stats, ashr, mixsqp, truncnorm, trust, horseshoe, deconvolveR,
+        magrittr, rlang, dplyr, ggplot2
+Suggests: testthat, numDeriv, REBayes, knitr, rmarkdown, cowplot
+RoxygenNote: 7.2.3
+VignetteBuilder: knitr
+LazyData: true
+Packaged: 2023-10-12 17:28:03 UTC; pcarbo
+Author: Jason Willwerscheid [aut],
+  Matthew Stephens [aut],
+  Peter Carbonetto [aut, cre],
+  Andrew Goldstein [ctb],
+  Yusha Liu [ctb]
+Maintainer: Peter Carbonetto <peter.carbonetto@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-03-08 20:10:02 UTC
+Date/Publication: 2023-10-12 21:10:02 UTC

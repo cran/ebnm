@@ -1,34 +1,39 @@
-# ebnm: Fit the empirical Bayes normal means problem
+# ebnm: Solve the empirical Bayes normal means problem
 
 [![Travis Build Status](https://travis-ci.com/stephenslab/ebnm.svg?branch=master)](https://app.travis-ci.com/github/stephenslab/ebnm)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/l4u64gdn4noqlb1i?svg=true)](https://ci.appveyor.com/project/pcarbo/ebnm)
 [![CircleCI build status](https://circleci.com/gh/stephenslab/ebnm.svg?style=svg)](https://app.circleci.com/pipelines/github/stephenslab/ebnm)
 [![codecov](https://codecov.io/gh/stephenslab/ebnm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/stephenslab/ebnm)
 
-The `ebnm` package provides functions to solve the (heteroskedastic) "empirical Bayes normal means" (EBNM) problem for various choices of prior family. The model is
+The `ebnm` package provides functions to solve the (heteroskedastic)
+"empirical Bayes normal means" (EBNM) problem for various choices of
+prior family. The model is
 
-x_j | θ_j, s_j \sim N(θ_j, s_j^2)
+$$ x_j \ | \ θ_j,\ s_j \sim N(θ_j,\ s_j^2) $$
 
-θ_j | s_j \sim g \in G
+$$ θ_j \ | \ s_j \sim g \in \mathcal{G} $$
 
-where the distribution g is to be estimated. The distribution g is referred to as the "prior distribution" for θ and G is a specified family of prior distributions. Several options for G are implemented, some parametric and others non-parametric; see below for examples.
+where the distribution $g$ is to be estimated. The distribution $g$ is
+referred to as the "prior distribution" for $θ$ and $\mathcal{G}$ is a specified
+family of prior distributions. Several options for $\mathcal{G}$ are implemented,
+some parametric and others non-parametric; see below for examples.
 
+Solving the EBNM problem involves two steps. First, estimate $g \in \mathcal{G}$
+via maximum marginal likelihood, yielding an estimate
 
-Solving the EBNM problem involves two steps. First, estimate g \in G via maximum marginal likelihood, yielding an estimate
-
-\hat{g}:= \arg\max_{g \in G} L(g)
+$$ \hat{g} := \arg\max_{g \in \mathcal{G}}\ L(g) $$
 
 where
 
-L(g):= ∏_j \int p(x_j | θ_j, s_j) g(dθ_j)
+$$ L(g):= \Pi_j\ \int\ p(x_j \ | \ θ_j,\ s_j)\ g(dθ_j) $$
 
-Second, compute the posterior distributions p(θ_j | x_j, s_j, \hat{g}) and/or summaries such as posterior means and posterior second moments.
-
+Second, compute the posterior distributions $p(θ_j \ | \ x_j,\ s_j,\ \hat{g})$
+and/or summaries such as posterior means and posterior second moments.
 
 The prior families that have been implemented include:
 
 "point_normal":
-The family of mixtures where one component is a point mass at μ and the other is a normal distribution centered at μ.
+The family of mixtures where one component is a point mass at $μ$ and the other is a normal distribution centered at $μ$.
 
 "point_laplace":
 The family of mixtures where one component is a point mass at zero and the other is a double-exponential distribution.
@@ -57,11 +62,20 @@ The family of unimodal distributions with support constrained to be greater than
 "unimodal_nonpositive":
 The family of unimodal distributions with support constrained to be less than the mode.
 
+"generalized_binary":
+The family of mixtures where one component is a point mass at zero and the other is a truncated normal distribution with lower bound zero and nonzero mode.
+
 "npmle":
 The family of all distributions.
 
 "deconvolver":
-A non-parametric exponential family with a natural spline basis. Like npmle, there is no unimodal assumption, but whereas npmle produces spiky estimates for g, deconvolver estimates are much more regular. See Narasimhan and Efron (2020) for details.
+A non-parametric exponential family with a natural spline basis. Like npmle, there is no unimodal assumption, but whereas npmle produces spiky estimates for $g$, deconvolver estimates are much more regular. See Narasimhan and Efron (2020) for details.
+
+"flat":
+A "non-informative" improper uniform prior.
+
+"point_mass":
+The family of all point masses.
 
 ## License
 
@@ -75,11 +89,10 @@ fitness for a particular purpose**.
 
 ## Quick Start
 
-Install the ebnm package using `devtools`:
+Install the ebnm package:
 
 ```R
-library(devtools)
-install_github("stephenslab/ebnm")
+install.packages("ebnm")
 ```
 
 Load `ebnm` into your R environment, and get help:
@@ -89,17 +102,12 @@ library(ebnm)
 ?ebnm
 ```
 
-Try an example
+Try an example:
+
 ```R
 set.seed(1)
-mu = c(rep(0,500),rnorm(500)) # true means
-x = mu + rnorm(1000) # observations with standard error 1
-x.ebnm = ebnm_point_normal(x, 1)
-plot(mu, x.ebnm$posterior$mean) # plot posterior mean against true values
+theta = c(rep(0, 500), rnorm(500)) # true means
+x = theta + rnorm(1000) # observations with standard error 1
+ebnm_res = ebnm_point_normal(x, 1)
+plot(ebnm_res)
 ```
-
-## Credits 
-
-The `ebnm_point_laplace` function is derived from ideas and code in the *EbayesThresh* package
-by I Johnstone and B Silverman.
-

@@ -4,13 +4,15 @@
 \alias{print.ebnm}
 \title{Print an ebnm object}
 \usage{
-\method{print}{ebnm}(x, ...)
+\method{print}{ebnm}(x, digits = 2, ...)
 }
 \arguments{
 \item{x}{The fitted \code{ebnm} object.}
 
+\item{digits}{Number of significant digits to use.}
+
 \item{...}{Not used. Included for consistency as an S3 method.}
 }
 \description{
-The \code{print} method for class \code{ebnm}.
+The \code{print} method for class \code{\link{ebnm}}.
 }
