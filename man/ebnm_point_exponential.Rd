@@ -27,9 +27,10 @@ not allowed.}
 \item{mode}{A scalar specifying the mode of the prior \eqn{g} or
 \code{"estimate"} if the mode is to be estimated from the data.}
 
-\item{scale}{A scalar specifying the scale parameter of the exponential
-component or \code{"estimate"} if the scale is to be estimated
-from the data.}
+\item{scale}{A scalar specifying the scale parameter of the
+exponential component or \code{"estimate"} if the scale is to be
+estimated from the data. The mean of the exponential component is
+the same as the value of \code{scale}.}
 
 \item{g_init}{The prior distribution \eqn{g}. Usually this is left
 unspecified (\code{NULL}) and estimated from the data. However, it can be
@@ -50,12 +51,15 @@ Function \code{ebnm_output_default()} provides the default return values, while
 below.}
 
 \item{optmethod}{A string specifying which optimization function is to be
-used. Options include \code{"nlm"}, \code{"lbfgsb"} (which calls
-\code{optim} with \code{method = "L-BFGS-B"}), and \code{"trust"} (which
-calls into package \code{trust}). Other options are \code{"nohess_nlm"},
+used. Options include \code{"nlm"} (which calls \code{\link[stats]{nlm}}),
+\code{"lbfgsb"} (which calls \code{\link[stats]{optim}}
+with \code{method = "L-BFGS-B"}), and \code{"trust"} (which
+calls into the \code{\link[trust]{trust}} package).
+Other options are \code{"nohess_nlm"},
 \code{"nograd_nlm"}, and \code{"nograd_lbfgsb"}, which use numerical
-approximations rather than exact expressions for the Hessian and (for
-the latter two) the gradient. The default option is \code{"nohess_nlm"}.}
+approximations rather than exact expressions for the Hessian; both of the
+\code{"nograd"} functions use numerical approximations for the gradient as
+well. The default option is \code{"nohess_nlm"}.}
 
 \item{control}{A list of control parameters to be passed to the
 optimization function specified by parameter \code{optmethod}.}
@@ -84,12 +88,13 @@ An \code{ebnm} object. Depending on the argument to \code{output}, the
    respective help pages, linked below under \strong{See Also}.
 }
 \description{
-Solves the empirical Bayes normal means (EBNM) problem using the family of
-  point-exponential priors (the family of mixtures where one component is a
-  point mass at \eqn{\mu} and the other is a (nonnegative) exponential
-  distribution with mode \eqn{\mu}). Identical to function \code{\link{ebnm}}
-  with argument \code{prior_family = "point_exponential"}. For details about
-  the model, see \code{\link{ebnm}}.
+Solves the empirical Bayes normal means (EBNM) problem using the
+family of point-exponential priors (the family of mixtures where
+one component is a point mass at \eqn{\mu} and the other is a
+(nonnegative) exponential distribution with mode
+\eqn{\mu}). Identical to function \code{\link{ebnm}} with argument
+\code{prior_family = "point_exponential"}. For details about the
+model, see \code{\link{ebnm}}.
 }
 \seealso{
 See \code{\link{ebnm}} for examples of usage and model details.

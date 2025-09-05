@@ -107,25 +107,45 @@ Function \code{ebnm_output_default()} provides the default return values, while
 below.}
 
 \item{optmethod}{A string specifying which optimization function is to be
-used. Since all non-parametric families rely upon external packages, this
-parameter is only available for parametric families (point-normal,
-point-Laplace, point-exponential, and normal). Options include \code{"nlm"},
-\code{"lbfgsb"} (which calls
-\code{optim} with \code{method = "L-BFGS-B"}), and \code{"trust"} (which
-calls into package \code{trust}). Other options are \code{"nohess_nlm"},
-\code{"nograd_nlm"}, and \code{"nograd_lbfgsb"}, which use numerical
-approximations rather than exact expressions for the Hessian and (for
-the latter two) the gradient. The default option is \code{"nohess_nlm"}.}
+  used.
+
+  For parametric families other than the horseshoe and generalized binary
+  (normal, point-normal, point-Laplace, and point-exponential), options
+  include \code{"nlm"} (which calls \code{\link[stats]{nlm}}), \code{"lbfgsb"}
+  (which calls \code{\link[stats]{optim}}
+  with \code{method = "L-BFGS-B"}), and \code{"trust"} (which
+  calls into the \code{\link[trust]{trust}} package).
+  Other options are \code{"nohess_nlm"},
+  \code{"nograd_nlm"}, and \code{"nograd_lbfgsb"}, which use numerical
+  approximations rather than exact expressions for the Hessian; both of the
+  \code{"nograd"} functions use numerical approximations for the gradient as
+  well. The default option is \code{"nohess_nlm"}.
+
+  Since the horseshoe, generalized binary, and point mass families only require
+  one parameter to be estimated (at most), the only available optimization method
+  is \code{\link[stats]{optimize}}, and thus the \code{optmethod} parameter is
+  ignored by \code{ebnm_horseshoe}, \code{ebnm_generalized_binary}, and
+  \code{ebnm_point_mass}.
+
+  For most nonparametric families (scale mixtures of normals; unimodal,
+  symmetric unimodal, nonnegative unimodal, and nonpositive unimodal families;
+  and the NPMLE), \code{optmethod} options are provided by package
+  \code{ashr}. The default method uses the mix-SQP algorithm implemented in
+  the \code{mixsqp} package. See the \code{\link[ashr]{ash}} function
+  documentation for other options. For the NPMLE only, it is also possible to
+  specify \code{optmethod = "REBayes"}, which uses function
+  \code{\link[REBayes]{GLmix}} in the \code{REBayes} package to estimate
+  the NPMLE rather than using the \code{ashr} package. Note that \code{REBayes}
+  requires installation of the commercial interior-point solver MOSEK; for
+  details, see the documentation for \code{REBayes} function
+  \code{\link[REBayes]{KWDual}}.
+
+  The nonparametric exception is the the "deconvolveR" family. Since
+  the \code{deconvolveR} package only ever uses \code{\link[stats]{nlm}},
+  \code{ebnm_deconvolver} ignores the \code{optmethod} parameter.}
 
 \item{control}{A list of control parameters to be passed to the optimization
-function. \code{\link[stats]{optimize}} is used for normal and horseshoe
-prior families, while \code{\link[stats]{nlm}} is used for parametric
-families unless parameter \code{optmethod} specifies otherwise.
-\code{\link[stats]{nlm}} is also used for the \code{deconvolveR} prior family.
-For ash families (including scale mixtures of normals, the NPMLE, and
-all \code{unimodal_} families), function \code{\link[mixsqp]{mixsqp}} in
-package \code{mixsqp} is the default. For generalized binary priors,
-function \code{\link[stats]{optim}} is used with \code{method = "L-BFGS-B"}.}
+function specified by parameter \code{optmethod}.}
 
 \item{...}{Additional parameters. When a \code{unimodal_} prior family is used,
 these parameters are passed to function \code{\link[ashr]{ash}} in package
@@ -170,8 +190,9 @@ An \code{ebnm} object. Depending on the argument to \code{output}, the
 }
 \description{
 Solves the empirical Bayes normal means (EBNM) problem using a specified
-  family of priors. For an article-length introduction to the package, see
-  Willwerscheid and Stephens (2021), cited in \strong{References} below.
+  family of priors. For a detailed introduction to the package, see
+  Willwerscheid, Carbonetto, and Stephens (2025), our JSS article cited in
+  \strong{References} below.
 }
 \details{
 Given vectors of data \code{x} and standard errors \code{s}, \code{ebnm}
@@ -286,14 +307,17 @@ unimodal.res <- ebnm_unimodal(x, s, control = list(verbose = TRUE))
 
 }
 \references{
-Jason Willwerscheid and Matthew Stephens (2021).
+Jason Willwerscheid, Peter Carbonetto, and Matthew Stephens (2025).
   \code{ebnm}: an \code{R} Package for solving the empirical Bayes
-  normal means problem using a variety of prior families. arXiv:2110.00152.
+  normal means problem using a variety of prior families. \emph{Journal of
+  Statistical Software}, \strong{114}(3), 1--33.
+  \doi{doi:10.18637/jss.v114.i03}.
 
-Yusha Liu, Peter Carbonetto, Jason Willwerscheid, Scott A Oakes, Kay F Macleod,
-  and Matthew Stephens (2023). Dissecting tumor transcriptional heterogeneity
-  from single-cell RNA-seq data by generalized binary covariance decomposition.
-  bioRxiv 2023.08.15.553436.
+Yusha Liu, Peter Carbonetto, Jason Willwerscheid, Scott A Oakes,
+  Kay F Macleod, and Matthew Stephens (2025). Dissecting tumor
+  transcriptional heterogeneity from single-cell RNA-seq data by
+  generalized binary covariance decomposition.  \emph{Nature Genetics}
+  \strong{57}, 263--273. \doi{doi:10.1038/s41588-024-01997-z}.
 }
 \seealso{
 A plotting method is available for \code{ebnm} objects: see

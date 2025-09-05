@@ -1,8 +1,8 @@
 Package: ebnm
 Encoding: UTF-8
 Type: Package
-Version: 1.1-2
-Date: 2023-10-12
+Version: 1.1-38
+Date: 2025-09-04
 Title: Solve the Empirical Bayes Normal Means Problem
 Authors@R: c(person("Jason", "Willwerscheid", role = "aut"),
              person("Matthew", "Stephens", role = "aut"),
@@ -14,18 +14,19 @@ URL: https://github.com/stephenslab/ebnm
 BugReports: https://github.com/stephenslab/ebnm/issues
 Description: Provides simple, fast, and stable functions to fit the normal
     means model using empirical Bayes. For available models and details, see 
-    function ebnm(). A detailed introduction to the package is provided
-    by Willwerscheid and Stephens (2021) <arXiv:2110.00152>.
+    function ebnm(). Our JSS article, 
+    Willwerscheid, Carbonetto, and Stephens (2025) <doi:10.18637/jss.v114.i03>,
+    provides a detailed introduction to the package.
 License: GPL (>= 3)
 NeedsCompilation: no
 Depends: R (>= 3.3.0)
 Imports: stats, ashr, mixsqp, truncnorm, trust, horseshoe, deconvolveR,
         magrittr, rlang, dplyr, ggplot2
-Suggests: testthat, numDeriv, REBayes, knitr, rmarkdown, cowplot
-RoxygenNote: 7.2.3
+Suggests: testthat, REBayes, knitr, rmarkdown, cowplot, mcmc, numDeriv
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 LazyData: true
-Packaged: 2023-10-12 17:28:03 UTC; pcarbo
+Packaged: 2025-09-04 16:01:11 UTC; jwillwer
 Author: Jason Willwerscheid [aut],
   Matthew Stephens [aut],
   Peter Carbonetto [aut, cre],
@@ -33,4 +34,4 @@ Author: Jason Willwerscheid [aut],
   Yusha Liu [ctb]
 Maintainer: Peter Carbonetto <peter.carbonetto@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-10-12 21:10:02 UTC
+Date/Publication: 2025-09-05 16:00:16 UTC
